@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>控制台</title>
+  <link rel="stylesheet" href="/static/layui/css/layui.css">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <style>
+    .lau-overview {
+      position: relative;
+      padding: 15px 15px 15px 75px;
+    }
+
+    .lau-overview>i {
+      position: absolute;
+      top: 25px;
+      left: 20px;
+      font-size: 2.6em;
+    }
+
+    #chart_order {
+      width: 100%;
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="layui-row layui-col-space15">
+    <!--快捷入口开始-->
+    <!-- <div class="layui-col-md4">
+        <div class="layui-card">
+            <div class="layui-card-header">快捷入口</div>
+            <div class="layui-card-body">
+                <div class="layui-carousel lau-carousel lau-shortcut">
+                    <div carousel-item>
+                        <ul class="layui-row layui-col-space10">
+                            <li class="layui-col-xs3">
+                                <a>
+                                    <i class="layui-icon layui-icon-website"></i>
+                                    <cite>弹层</cite>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs3">
+                                <a>
+                                    <i class="layui-icon layui-icon-website"></i>
+                                    <cite>弹层</cite>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs3">
+                                <a>
+                                    <i class="layui-icon layui-icon-website"></i>
+                                    <cite>弹层</cite>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs3">
+                                <a>
+                                    <i class="layui-icon layui-icon-website"></i>
+                                    <cite>弹层</cite>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs3">
+                                <a>
+                                    <i class="layui-icon layui-icon-website"></i>
+                                    <cite>弹层</cite>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs3">
+                                <a>
+                                    <i class="layui-icon layui-icon-website"></i>
+                                    <cite>弹层</cite>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs3">
+                                <a>
+                                    <i class="layui-icon layui-icon-website"></i>
+                                    <cite>弹层</cite>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs3">
+                                <a>
+                                    <i class="layui-icon layui-icon-website"></i>
+                                    <cite>弹层</cite>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!--快捷入口结束-->
+
+    <!--待办事项开始-->
+    <!-- <div class="layui-col-md4">
+        <div class="layui-card">
+            <div class="layui-card-header">待办事项</div>
+            <div class="layui-card-body">
+                <div class="layui-carousel lau-carousel lau-todo">
+                    <div carousel-item>
+                        <ul class="layui-row layui-col-space10">
+                            <li class="layui-col-xs6">
+                                <a class="lau-todo-body">
+                                    <h3>待审评论</h3>
+                                    <p><cite>66</cite></p>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs6">
+                                <a class="lau-todo-body">
+                                    <h3>待审评论</h3>
+                                    <p><cite>66</cite></p>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs6">
+                                <a class="lau-todo-body">
+                                    <h3>待审评论</h3>
+                                    <p><cite>66</cite></p>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs6">
+                                <a class="lau-todo-body">
+                                    <h3>待审评论</h3>
+                                    <p><cite>66</cite></p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="layui-row layui-col-space10">
+                            <li class="layui-col-xs6">
+                                <a class="lau-todo-body">
+                                    <h3>待审评论</h3>
+                                    <p><cite>66</cite></p>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs6">
+                                <a class="lau-todo-body">
+                                    <h3>待审评论</h3>
+                                    <p><cite>66</cite></p>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs6">
+                                <a class="lau-todo-body">
+                                    <h3>待审评论</h3>
+                                    <p><cite>66</cite></p>
+                                </a>
+                            </li>
+                            <li class="layui-col-xs6">
+                                <a class="lau-todo-body">
+                                    <h3>待审评论</h3>
+                                    <p><cite>66</cite></p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!--待办事项结束-->
+
+    <!--系统负载开始-->
+    <!-- <div class="layui-col-md4">
+        <div class="layui-card">
+            <div class="layui-card-header">系统负载</div>
+            <div class="layui-card-body lau-load lau-takerates">
+                <div class="layui-progress" lay-showPercent="yes">
+                    <h3>CPU使用率</h3>
+                    <div class="layui-progress-bar" lay-percent="58%"></div>
+                </div>
+                <div class="layui-progress" lay-showPercent="yes">
+                    <h3>内存占用率</h3>
+                    <div class="layui-progress-bar layui-bg-red" lay-percent="90%"></div>
+                </div>
+                <div class="layui-progress" lay-showPercent="yes">
+                    <h3>转化率（日同比 28% <span class="layui-edge layui-edge-bottom"></span>）</h3>
+                    <div class="layui-progress-bar" lay-percent="32%"></div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!--系统负载结束-->
+
+    <!--统计预览开始-->
+    <div class="layui-col-md12">
+      <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-sm4">
+              <div class="lau-overview layui-bg-blue">
+                <i class="layui-icon layui-icon-rmb"></i>
+                <h5>本日收益</h5>
+                <h2>￥208</h2>
+              </div>
+            </div>
+            <div class="layui-col-sm4">
+              <div class="lau-overview layui-bg-cyan">
+                <i class="layui-icon layui-icon-username"></i>
+                <h5>本日新增用户</h5>
+                <h2>108</h2>
+              </div>
+            </div>
+            <div class="layui-col-sm4">
+              <div class="lau-overview layui-bg-cyan">
+                <i class="layui-icon layui-icon-list"></i>
+                <h5>待支付订单</h5>
+                <h2>38</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md6">
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-sm4">
+              <div class="lau-overview layui-bg-green">
+                <i class="layui-icon layui-icon-templeate-1"></i>
+                <h5>待发货订单</h5>
+                <h2>3</h2>
+              </div>
+            </div>
+            <div class="layui-col-sm4">
+              <div class="lau-overview layui-bg-red">
+                <i class="layui-icon layui-icon-log"></i>
+                <h5>待完成订单</h5>
+                <h2>23</h2>
+              </div>
+            </div>
+            <div class="layui-col-sm4">
+              <div class="lau-overview layui-bg-red">
+                <i class="layui-icon layui-icon-template-1"></i>
+                <h5>当前商品总量</h5>
+                <h2>1138</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--统计预览结束-->
+
+    <div class="layui-col-md6">
+      <!--访客量统计开始-->
+      <div class="layui-card">
+        <div class="layui-card-header">访客量统计</div>
+        <div class="layui-card-body">
+          <div id="chart_order"></div>
+        </div>
+      </div>
+      <!--访客量统计结束-->
+    </div>
+
+    <div class="layui-col-md6">
+      <!--版本信息开始-->
+      <div class="layui-card">
+        <div class="layui-card-header">版本信息</div>
+        <div class="layui-card-body layui-text">
+          <table class="layui-table">
+            <tbody>
+              <tr>
+                <td>当前版本</td>
+                <td>v1.0.0 <a lau-href="/doc/changelog.html">更新日志</a></td>
+              </tr>
+              <tr>
+                <td>基于框架</td>
+                <td>layui-v2.2.6 <a href="http://www.layui.com/doc/base/changelog.html" target="_blank">更新日志</a></td>
+              </tr>
+              <tr>
+                <td>联系作者</td>
+                <td>
+                  <a href="http://wpa.qq.com/msgrd?v=3&uin=296399959&site=qq&menu=yes" target="_blank">QQ</a> /
+                  <a href="mailto:su@revoke.cc">邮件</a> /
+                  <a href="http://shang.qq.com/wpa/qunwpa?idkey=a4235da100d79f46b030940e2b41b80bd02d8ca5f21c6988e7759aac8d5700a9" target="_blank">QQ群</a>
+                </td>
+              </tr>
+              <tr>
+                <td>获取渠道</td>
+                <td><a lau-event="about">点击查看</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!--版本信息结束-->
+
+      <!--文本开始-->
+      <div class="layui-card">
+        <div class="layui-card-header">相关说明</div>
+        <div class="layui-card-body layui-text">
+          <ul>
+            <li>LAU是经过<a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>正版授权二次开发的项目，并非盗用源码，请知悉。</li>
+            <li>LAU的部分样式是抄袭自<a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>，基本都是控制台的样式。</li>
+            <li>LAU不包含<a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>源码。</li>
+            <li>LAU秉承开源精神，如果源码用于个人学习完全是免费的，如果用于商业项目，请向作者<a lau-href="/doc/license.html">购买授权</a>。</li>
+          </ul>
+        </div>
+      </div>
+      <!--文本结束-->
+    </div>
+  </div>
+
+</body>
+<script src="/static/js/echarts.min.js"></script>
+<script src="/static/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '/static/'
+  }).extend({
+    common: 'js/common'
+  }).use(['table', 'common', 'carousel', 'element'], function() {
+    var common = layui.common,
+      $ = layui.$,
+      layer = layui.layer,
+      carousel = layui.carousel,
+      element = layui.element,
+      table = layui.table;
+
+
+    //监听事件,这个不一定要用lau-event,可以自己写
+    $(document).on('click', '[lau-event]', function() {
+      var _this = $(this);
+      switch (_this.attr('lau-event')) {
+        case 'about':
+          $.get('/html/about.html', function(html) {
+            common.drawer({
+              content: html
+            });
+          });
+          break;
+      }
+    });
+
+    //激活轮播
+    $('.lau-carousel').each(function() {
+      var that = $(this);
+      carousel.render({
+        elem: this,
+        width: '100%',
+        arrow: 'none',
+        interval: that.data('interval'),
+        autoplay: that.data('autoplay') === true,
+        trigger: 'hover',
+        anim: that.data('anim')
+      });
+    });
+
+
+  });
+  var chartOrder = echarts.init(document.getElementById('chart_order'));
+  var option = {
+    title: {
+      text: '本日订单总量：',
+      textStyle: {
+        fontSize: '14',
+        fontWeight: 'normal'
+      },
+      subtext: '210',
+      subtextStyle: {
+        fontSize: '20',
+        color: '#000',
+        fontWeight: 'bold'
+      },
+      x: 'center',
+      y: 'center'
+    },
+    legend: {
+      orient: 'vertical',
+      x: 'right',
+      data: ['待支付', '待发货', '待完成']
+    },
+    series: [{
+      name: '订单统计',
+      type: 'pie',
+      radius: ['50%', '80%'],
+      avoidLabelOverlap: false,
+      label: {
+
+        normal: {
+          show: true,
+          formatter: '{c} 笔',
+          position: 'inside',
+          textStyle: {
+            fontSize: '16',
+            fontWeight: 'normal'
+          }
+        },
+        emphasis: {
+          show: true,
+          formatter: '{c} 笔',
+          position: 'inside',
+          textStyle: {
+            fontSize: '26',
+            fontWeight: 'bold'
+          }
+        }
+      },
+      labelLine: {
+        normal: {
+          show: false
+        }
+      },
+      data: [{
+          value: 50,
+          name: '待支付'
+        },
+        {
+          value: 20,
+          name: '待发货'
+        },
+        {
+          value: 140,
+          name: '待完成'
+        }
+      ]
+    }]
+  };
+
+  chartOrder.setOption(option);
+</script>
+
+
+</html>

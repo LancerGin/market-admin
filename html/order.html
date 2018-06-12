@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>订单中心</title>
+  <link rel="stylesheet" href="/static/layui/css/layui.css">
+</head>
+
+<body>
+
+  <div class="layui-row layui-col-space15">
+    <div class="layui-card">
+      <div class="layui-card-header">订单中心</div>
+      <div class="layui-card-body">
+        <div class="layui-col-md8">
+          <!--数据表格开始-->
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title">
+                  <li class="layui-this">今日热搜</li>
+                  <li>今日热帖</li>
+                </ul>
+                <div class="layui-tab-content">
+                  <div class="layui-tab-item layui-show">
+                    <table id="hot-search"></table>
+                  </div>
+                  <div class="layui-tab-item">
+                    <table id="hot-article"></table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--数据表格结束-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script src="/static/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '/static/'
+  }).extend({
+    common: 'js/common'
+  }).use(['table', 'common', 'carousel', 'element'], function() {
+    var common = layui.common,
+      $ = layui.$,
+      layer = layui.layer,
+      carousel = layui.carousel,
+      element = layui.element,
+      table = layui.table;
+
+
+    //监听事件,这个不一定要用lau-event,可以自己写
+    $(document).on('click', '[lau-event]', function() {
+      var _this = $(this);
+      switch (_this.attr('lau-event')) {
+        case 'about':
+          $.get('/html/about.html', function(html) {
+            common.drawer({
+              content: html
+            });
+          });
+          break;
+      }
+    });
+    //今日热搜
+    var hotSearch = table.render({
+      elem: '#hot-search',
+      url: '/json/hot-search.json',
+      page: true,
+      cols: [
+        [{
+            title: 'ID',
+            width: 40,
+            type: 'numbers',
+            fixed: 'left'
+          },
+          {
+            field: 'keywords',
+            title: '标题',
+            templet: function(d) {
+              return '<a class="layui-table-link">' + d.keywords + '</a>';
+            }
+          },
+          {
+            field: 'frequency',
+            title: '搜索次数',
+            sort: true
+          },
+          {
+            field: 'userNums',
+            title: '用户数',
+            sort: true
+          }
+        ]
+      ]
+    });
+
+    //今日热帖
+    var hotArticle = table.render({
+      elem: '#hot-article',
+      url: '/json/hot-article.json',
+      page: true,
+      cols: [
+        [{
+            title: 'ID',
+            width: 40,
+            type: 'numbers',
+            fixed: 'left'
+          },
+          {
+            field: 'title',
+            title: '标题',
+            templet: function(d) {
+              return '<a class="layui-table-link">' + d.title + '</a>';
+            }
+          },
+          {
+            field: 'username',
+            title: '发帖者'
+          },
+          {
+            field: 'channel',
+            title: '类别'
+          },
+          {
+            field: 'crt',
+            title: '点击率',
+            sort: true
+          }
+        ]
+      ]
+    });
+  });
+</script>
