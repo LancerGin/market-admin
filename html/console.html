@@ -25,6 +25,16 @@
       width: 100%;
       height: 400px;
     }
+
+    #chart_user {
+      width: 100%;
+      height: 400px;
+    }
+
+    #chart_balance {
+      width: 100%;
+      height: 400px;
+    }
   </style>
 </head>
 
@@ -203,7 +213,7 @@
               </div>
             </div>
             <div class="layui-col-sm4">
-              <div class="lau-overview layui-bg-cyan">
+              <div class="lau-overview layui-bg-green">
                 <i class="layui-icon layui-icon-list"></i>
                 <h5>待支付订单</h5>
                 <h2>38</h2>
@@ -221,7 +231,7 @@
               </div>
             </div>
             <div class="layui-col-sm4">
-              <div class="lau-overview layui-bg-red">
+              <div class="lau-overview layui-bg-green">
                 <i class="layui-icon layui-icon-log"></i>
                 <h5>待完成订单</h5>
                 <h2>23</h2>
@@ -241,63 +251,38 @@
     <!--统计预览结束-->
 
     <div class="layui-col-md6">
-      <!--访客量统计开始-->
+      <!--订单量统计开始-->
       <div class="layui-card">
-        <div class="layui-card-header">访客量统计</div>
+        <div class="layui-card-header">订单量统计</div>
         <div class="layui-card-body">
           <div id="chart_order"></div>
         </div>
       </div>
-      <!--访客量统计结束-->
+      <!--订单量统计结束-->
     </div>
 
     <div class="layui-col-md6">
-      <!--版本信息开始-->
+      <!--新增用户量开始-->
       <div class="layui-card">
-        <div class="layui-card-header">版本信息</div>
-        <div class="layui-card-body layui-text">
-          <table class="layui-table">
-            <tbody>
-              <tr>
-                <td>当前版本</td>
-                <td>v1.0.0 <a lau-href="/doc/changelog.html">更新日志</a></td>
-              </tr>
-              <tr>
-                <td>基于框架</td>
-                <td>layui-v2.2.6 <a href="http://www.layui.com/doc/base/changelog.html" target="_blank">更新日志</a></td>
-              </tr>
-              <tr>
-                <td>联系作者</td>
-                <td>
-                  <a href="http://wpa.qq.com/msgrd?v=3&uin=296399959&site=qq&menu=yes" target="_blank">QQ</a> /
-                  <a href="mailto:su@revoke.cc">邮件</a> /
-                  <a href="http://shang.qq.com/wpa/qunwpa?idkey=a4235da100d79f46b030940e2b41b80bd02d8ca5f21c6988e7759aac8d5700a9" target="_blank">QQ群</a>
-                </td>
-              </tr>
-              <tr>
-                <td>获取渠道</td>
-                <td><a lau-event="about">点击查看</a></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="layui-card-header">新增用户量</div>
+        <div class="layui-card-body">
+          <div id="chart_user"></div>
         </div>
       </div>
-      <!--版本信息结束-->
-
-      <!--文本开始-->
-      <div class="layui-card">
-        <div class="layui-card-header">相关说明</div>
-        <div class="layui-card-body layui-text">
-          <ul>
-            <li>LAU是经过<a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>正版授权二次开发的项目，并非盗用源码，请知悉。</li>
-            <li>LAU的部分样式是抄袭自<a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>，基本都是控制台的样式。</li>
-            <li>LAU不包含<a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>源码。</li>
-            <li>LAU秉承开源精神，如果源码用于个人学习完全是免费的，如果用于商业项目，请向作者<a lau-href="/doc/license.html">购买授权</a>。</li>
-          </ul>
-        </div>
-      </div>
-      <!--文本结束-->
+      <!--新增用户量结束-->
     </div>
+
+    <div class="layui-col-md12">
+      <!--收益统计开始-->
+      <div class="layui-card">
+        <div class="layui-card-header">收益统计</div>
+        <div class="layui-card-body">
+          <div id="chart_balance"></div>
+        </div>
+      </div>
+      <!--收益统计结束-->
+    </div>
+
   </div>
 
 </body>
@@ -347,76 +332,254 @@
 
 
   });
-  var chartOrder = echarts.init(document.getElementById('chart_order'));
-  var option = {
-    title: {
-      text: '本日订单总量：',
-      textStyle: {
-        fontSize: '14',
-        fontWeight: 'normal'
-      },
-      subtext: '210',
-      subtextStyle: {
-        fontSize: '20',
-        color: '#000',
-        fontWeight: 'bold'
-      },
-      x: 'center',
-      y: 'center'
-    },
-    legend: {
-      orient: 'vertical',
-      x: 'right',
-      data: ['待支付', '待发货', '待完成']
-    },
-    series: [{
-      name: '订单统计',
-      type: 'pie',
-      radius: ['50%', '80%'],
-      avoidLabelOverlap: false,
-      label: {
 
-        normal: {
-          show: true,
-          formatter: '{c} 笔',
-          position: 'inside',
+  // 订单量统计图表
+  var orderChart = {
+    chartObj: echarts.init(document.getElementById('chart_order')),
+    option: function() {
+      var data = {
+        title: "本日订单总量",
+        total: "210",
+        legend: ['待支付', '待发货', '待完成'],
+        groups: [{
+            value: 50,
+            name: '待支付'
+          },
+          {
+            value: 20,
+            name: '待发货'
+          },
+          {
+            value: 140,
+            name: '待完成'
+          }
+        ]
+      };
+      return {
+        title: {
+          text: data.title + '：',
           textStyle: {
-            fontSize: '16',
+            fontSize: '14',
             fontWeight: 'normal'
-          }
-        },
-        emphasis: {
-          show: true,
-          formatter: '{c} 笔',
-          position: 'inside',
-          textStyle: {
-            fontSize: '26',
+          },
+          subtext: data.total,
+          subtextStyle: {
+            fontSize: '20',
+            color: '#000',
             fontWeight: 'bold'
-          }
-        }
-      },
-      labelLine: {
-        normal: {
-          show: false
-        }
-      },
-      data: [{
-          value: 50,
-          name: '待支付'
+          },
+          x: 'center',
+          y: 'center'
         },
-        {
-          value: 20,
-          name: '待发货'
+        legend: {
+          orient: 'vertical',
+          x: 'right',
+          data: data.legend
         },
-        {
-          value: 140,
-          name: '待完成'
-        }
-      ]
-    }]
-  };
+        series: [{
+          name: '订单统计',
+          type: 'pie',
+          radius: ['50%', '80%'],
+          avoidLabelOverlap: false,
+          label: {
 
-  chartOrder.setOption(option);
+            normal: {
+              show: true,
+              formatter: '{c} 笔',
+              position: 'inside',
+              textStyle: {
+                fontSize: '16',
+                fontWeight: 'normal'
+              }
+            },
+            emphasis: {
+              show: true,
+              formatter: '{c} 笔',
+              position: 'inside',
+              textStyle: {
+                fontSize: '26',
+                fontWeight: 'bold'
+              }
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          data: data.groups
+        }]
+      }
+    },
+    init: function() {
+      this.chartObj.setOption(this.option());
+    }
+  };
+  orderChart.init();
+
+  // 新增用户量图表
+  var userChart = {
+    chartObj: echarts.init(document.getElementById('chart_user')),
+    option: function() {
+      var base = +new Date(2017, 9, 3);
+      var oneDay = 24 * 3600 * 1000;
+      var date = [];
+      var data = [];
+      for (var i = 1; i < 365; i++) {
+        var now = new Date(base += oneDay);
+        date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+        data.push(Math.round((Math.random()) * 10));
+      }
+
+      return {
+        tooltip: {
+          trigger: 'axis',
+          position: function(pt) {
+            return [pt[0], '10%'];
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: date
+        },
+        yAxis: {
+          type: 'value',
+          boundaryGap: [0, '100%']
+        },
+        dataZoom: [{
+          type: 'inside',
+          start: 0,
+          end: 10
+        }, {
+          start: 0,
+          end: 10,
+          handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+          handleSize: '80%',
+          handleStyle: {
+            color: '#fff',
+            shadowBlur: 3,
+            shadowColor: 'rgba(0, 0, 0, 0.6)',
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+          }
+        }],
+        series: [{
+          name: '新增用户',
+          type: 'line',
+          smooth: true,
+          symbol: 'none',
+          sampling: 'average',
+          itemStyle: {
+            normal: {
+              color: 'rgb(255, 70, 131)'
+            }
+          },
+          areaStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0,
+                color: 'rgb(255, 158, 68)'
+              }, {
+                offset: 1,
+                color: 'rgb(255, 70, 131)'
+              }])
+            }
+          },
+          data: data
+        }]
+      }
+    },
+    init: function() {
+      this.chartObj.setOption(this.option());
+    }
+  };
+  userChart.init();
+
+  // 收益统计图表
+  var balanceChart = {
+    chartObj: echarts.init(document.getElementById('chart_balance')),
+    option: function() {
+      var base = +new Date(2017, 9, 3);
+      var oneDay = 24 * 3600 * 1000;
+      var date = [];
+      var data = [];
+      for (var i = 1; i < 365; i++) {
+        var now = new Date(base += oneDay);
+        date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
+        data.push(Math.round((Math.random()) * 4000));
+      }
+
+      return {
+        tooltip: {
+          trigger: 'axis',
+          position: function(pt) {
+            return [pt[0], '10%'];
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: date
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            formatter: '￥{value}'
+          },
+          boundaryGap: [0, '100%']
+        },
+        dataZoom: [{
+          type: 'inside',
+          start: 0,
+          end: 10
+        }, {
+          start: 0,
+          end: 10,
+          handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+          handleSize: '80%',
+          handleStyle: {
+            color: '#fff',
+            shadowBlur: 3,
+            shadowColor: 'rgba(0, 0, 0, 0.6)',
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+          }
+        }],
+        series: [{
+          name: '当日收益',
+          type: 'line',
+          smooth: true,
+          symbol: 'none',
+          sampling: 'average',
+          itemStyle: {
+            normal: {
+              color: 'rgb(255, 70, 131)'
+            }
+          },
+          lineStyle: {
+            opacity: 0
+          },
+          areaStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0,
+                color: 'rgb(60,218,223)'
+              }, {
+                offset: 1,
+                color: 'rgb(152,191,208)'
+              }])
+            }
+          },
+          data: data
+        }]
+      }
+    },
+    init: function() {
+      this.chartObj.setOption(this.option());
+    }
+  };
+  balanceChart.init();
 </script>
 
 
