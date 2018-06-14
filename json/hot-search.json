@@ -4,43 +4,43 @@
   ,"count": "100"
   ,"data": [{
     "keywords": "贤心是男是女"
-    ,"frequency": 8520
-    ,"userNums": 2216
+    ,"createDate": 8520
+    ,"canused": false
   },{
     "keywords": "Java程序员能找到女朋友吗"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   },{
     "keywords": "此表格是静态模拟数据"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   },{
     "keywords": "layui官方教程"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   },{
     "keywords": "layui官方教程"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   },{
     "keywords": "layui官方教程"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   },{
     "keywords": "layui官方教程"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   },{
     "keywords": "layui官方教程"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   },{
     "keywords": "layui官方教程"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   },{
     "keywords": "layui官方教程"
-    ,"frequency": 666
-    ,"userNums": 333
+    ,"createDate": "2018/6/14"
+    ,"canused": true
   }]
 }

@@ -15,9 +15,25 @@
     <div class="layui-card">
       <div class="layui-card-header">会员管理</div>
       <div class="layui-card-body">
-        <div class="layui-col-md8">
+        <div class="layui-col-md12">
+          <div class="layui-form">
+            <div class="layui-form-item">
+              <div class="layui-inline">
+                <label class="layui-form-label">日期范围</label>
+                <div class="layui-input-inline">
+                  <input type="text" class="layui-input" id="createDate" placeholder=" - ">
+                </div>
+              </div>
+              <div class="layui-input-inline">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="会员名" class="layui-input">
+              </div>
+              <button class="layui-btn">搜索</button>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md12">
           <!--数据表格开始-->
-          <div class="layui-card">
+          <!-- <div class="layui-card">
             <div class="layui-card-body">
               <div class="layui-tab layui-tab-brief">
                 <ul class="layui-tab-title">
@@ -34,13 +50,23 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!--数据表格结束-->
+          <!--会员管理表格开始-->
+          <table id="user-table"></table>
+          <!--会员管理表格开始-->
         </div>
       </div>
     </div>
   </div>
-
+  <script type="text/html" id="switchTpl">
+    <!-- 这里的 checked 的状态只是演示 -->
+    <input type="checkbox" name="canused" value="{{d.keywords}}" lay-skin="switch" lay-text="是|否" lay-filter="canusedDemo" {{ d.canused ? 'checked' : '' }}>
+  </script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
 </body>
 <script src="/static/layui/layui.js"></script>
 <script>
@@ -48,12 +74,13 @@
     base: '/static/'
   }).extend({
     common: 'js/common'
-  }).use(['table', 'common', 'carousel', 'element'], function() {
+  }).use(['table', 'common', 'element', 'laydate', 'form'], function() {
     var common = layui.common,
       $ = layui.$,
       layer = layui.layer,
-      carousel = layui.carousel,
       element = layui.element,
+      laydate = layui.laydate,
+      form = layui.form,
       table = layui.table;
 
 
@@ -70,70 +97,55 @@
           break;
       }
     });
-    //今日热搜
-    var hotSearch = table.render({
-      elem: '#hot-search',
+    //监听是否使用操作
+    form.on('switch(canusedDemo)', function(obj) {
+      layer.tips(this.value + ' ' + this.name + '：' + obj.elem.checked, obj.othis);
+    });
+
+    //日期范围
+    laydate.render({
+      elem: '#createDate',
+      range: true
+    });
+    //会员管理表格
+    var userTable = table.render({
+      elem: '#user-table',
       url: '/json/hot-search.json',
       page: true,
       cols: [
         [{
             title: 'ID',
-            width: 40,
+            width: 60,
             type: 'numbers',
             fixed: 'left'
           },
           {
-            field: 'keywords',
-            title: '标题',
+            field: 'username',
+            title: '用户名',
             templet: function(d) {
               return '<a class="layui-table-link">' + d.keywords + '</a>';
             }
           },
           {
-            field: 'frequency',
-            title: '搜索次数',
+            field: 'createDate',
+            title: '创建日期',
+            width: 160,
+            align: 'center',
             sort: true
           },
           {
-            field: 'userNums',
-            title: '用户数',
-            sort: true
-          }
-        ]
-      ]
-    });
-
-    //今日热帖
-    var hotArticle = table.render({
-      elem: '#hot-article',
-      url: '/json/hot-article.json',
-      page: true,
-      cols: [
-        [{
-            title: 'ID',
-            width: 40,
-            type: 'numbers',
-            fixed: 'left'
+            field: 'canused',
+            title: '是否使用',
+            width: 90,
+            templet: '#switchTpl',
+            unresize: true
           },
           {
-            field: 'title',
-            title: '标题',
-            templet: function(d) {
-              return '<a class="layui-table-link">' + d.title + '</a>';
-            }
-          },
-          {
-            field: 'username',
-            title: '发帖者'
-          },
-          {
-            field: 'channel',
-            title: '类别'
-          },
-          {
-            field: 'crt',
-            title: '点击率',
-            sort: true
+            field: 'dos',
+            title: '操作',
+            width: 120,
+            align: 'center',
+            toolbar: '#barDemo'
           }
         ]
       ]
